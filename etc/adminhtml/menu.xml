@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Excellence_Orderexport::orderexport" title="Order Export" module="Excellence_Orderexport" sortOrder="30" parent="Excellence_Base::base" resource="Excellence_Base::base"/>
+        <add id="Excellence_Orderexport::orderexport_manage" title="Profiles" module="Excellence_Orderexport" sortOrder="10" parent="Excellence_Orderexport::orderexport" action="orderexport/index" resource="Excellence_Orderexport::manage"/>
+        <add id="Excellence_Orderexport::orderexport_manage_config" title="Configuration" module="Excellence_Orderexport" sortOrder="20" parent="Excellence_Orderexport::orderexport" action="adminhtml/system_config/edit/section/orderexport" resource="Excellence_Orderexport::manage"/>
+    </menu>
+</config>

@@ -1,0 +1,10 @@
+#orderexport_output_ftp_password{
+	width: 90%;
+}
+label[for='orderexport_output_ftp_password'].addafter{
+	float:right;
+	margin-top:4px;
+	border: 1px solid #433030;
+	padding:2px;
+	cursor: pointer;
+}

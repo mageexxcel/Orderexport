@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="orderexport" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>OrderExport</label>
+            <tab>excellence</tab>
+            <resource>Excellence_Orderexport::config_orderexport</resource>
+            <group id="basic_setting" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>OrderExport Basic Settings</label>
+                <attribute type="expanded">1</attribute>
+
+                <field id="version" type="text" translate="label comment" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <frontend_model>Excellence\Orderexport\Block\Adminhtml\System\Config\Form\Version</frontend_model>
+                </field>
+
+                <field id="enabled" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enable Extension</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Enable/Disable the module.]]></comment>
+                </field>
+            </group>
+            <group id="google_drive" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1"  showInStore="0">
+                <label>Google Drive Setup</label>
+                <field id="client_secret_file" translate="label" type="Magento\Config\Block\System\Config\Form\Field\File" sortOrder="10" showInDefault="1" showInWebsite="1" >
+                    <label>Client Secret File</label>
+                    <backend_model>Excellence\Orderexport\Model\Adminhtml\Config\Backend\File</backend_model>
+                    <upload_dir config="system">google_drive_secret_file</upload_dir>
+                    <comment><![CDATA[Select your downloaded Client Secret File (e.g. <strong>clients_secret.json</strong>) and save configuration. <a href="http://wiki.xmagestore.com/" target="_blank">Click here</a> to read the guide.]]></comment>
+                </field>
+                <field id="connect_to_google" type="text" translate="label comment" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <frontend_model>Excellence\Orderexport\Block\Adminhtml\System\Config\Form\GoogleConnect</frontend_model>
+                </field>
+            </group>
+            <group id="mailsettings" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1"  showInStore="0">
+                <label>Email Sender Setup</label>
+                <field id="email_sender" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Email Sender</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
+                    <comment><![CDATA[This will be used as email sender for the exported orders to be sent over mail. <a href="http://wiki.xmagestore.com/" target="_blank">Learn More</a>]]></comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

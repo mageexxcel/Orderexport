@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <link src="Excellence_Orderexport::js/fieldControl.js"/>
+        <css src="Excellence_Orderexport::css/formStyle.css" />
+    </head>
+    <update handle="editor"/>
+    <body>
+        <referenceContainer name="content">
+            <block class="Excellence\Orderexport\Block\Adminhtml\Orderexport\Edit" name="orderexport_edit"/>
+        </referenceContainer>
+        <referenceContainer name="left">
+            <block class="Excellence\Orderexport\Block\Adminhtml\Orderexport\Edit\Tabs" name="orderexport_edit_tabs">
+                <block class="Excellence\Orderexport\Block\Adminhtml\Orderexport\Edit\Tab\Main" name="orderexport_edit_tab_main"/>
+                <block class="Excellence\Orderexport\Block\Adminhtml\Orderexport\Edit\Tab\Filters" name="orderexport_edit_tab_filters"/>
+                <block class="Excellence\Orderexport\Block\Adminhtml\Orderexport\Edit\Tab\Template" name="orderexport_edit_tab_template"/>
+                <block class="Excellence\Orderexport\Block\Adminhtml\Orderexport\Edit\Tab\Output" name="orderexport_edit_tab_output"/>
+                <block class="Excellence\Orderexport\Block\Adminhtml\Orderexport\Edit\Tab\Cron" name="orderexport_edit_tab_cron"/>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">main_section</argument>
+                    <argument name="block" xsi:type="string">orderexport_edit_tab_main</argument>
+                </action>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">filters_section</argument>
+                    <argument name="block" xsi:type="string">orderexport_edit_tab_filters</argument>
+                </action>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">template_section</argument>
+                    <argument name="block" xsi:type="string">orderexport_edit_tab_template</argument>
+                </action>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">output_section</argument>
+                    <argument name="block" xsi:type="string">orderexport_edit_tab_output</argument>
+                </action>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">cron_section</argument>
+                    <argument name="block" xsi:type="string">orderexport_edit_tab_cron</argument>
+                </action>
+            </block>
+        </referenceContainer>
+    </body>
+</page>
