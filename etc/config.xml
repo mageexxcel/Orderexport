@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <orderexport>
+            <basic_setting>
+                <enabled>1</enabled>
+            </basic_setting>
+            <mailsettings>
+                <email_sender>general</email_sender>
+            </mailsettings>
+        </orderexport>
+    </default>
+</config>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Excellence. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../app/code/Magento/Cron/etc/crontab.xsd">
+    <group id="default">
+        <job name="export_order_profiles" instance="Excellence\Orderexport\Model\Orderexport" method="exportFileCron">
+            <schedule>*/5 * * * *</schedule>
+        </job>
+    </group>
+</config>

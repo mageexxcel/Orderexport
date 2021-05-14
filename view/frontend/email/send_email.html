@@ -1,0 +1,7 @@
+<!--@subject {{trans "%subject" subject=$subject}} @-->
+
+{{template config_path="design/email/header_template"}}
+
+<p>{{trans "Orders Exported  at: %time." time=$time}}</p>
+
+{{template config_path="design/email/footer_template"}}

@@ -1,0 +1,104 @@
+<?php
+// error_reporting(E_ALL); ini_set('display_errors', '1');
+
+include_once BP . '/app/code/Excellence/Orderexport/lib/google/vendor/autoload.php';
+include_once BP."/app/code/Excellence/Orderexport/lib/google/templates/base.php";
+
+$oauth_creds = $block->getCredentialsFilePath();
+$fileExtension  = (new SplFileInfo($oauth_creds))->getExtension();
+
+if (!file_exists($oauth_creds)) {
+  ?>
+    <div class="msg">
+      <h3><?php echo __("Credentials file not found"); ?></h3>
+      <button class="close-window" onclick="window.close()"><?php echo __("Close Window"); ?></button>
+    </div>
+  <?php
+  return;
+} else{
+  if($fileExtension != 'json'){
+    ?>
+      <div class="msg">
+        <h3><?php echo __("Credentials file format not supported. Please upload json file. e.g. client_secrets.json"); ?></h3>
+        <button class="close-window" onclick="window.close()"><?php echo __("Close Window"); ?></button>
+      </div>
+    <?php
+    return;
+  }
+  $oauth_credentials = $oauth_creds;
+}
+
+$redirect_uri = $block->getUrl('orderexport');
+
+$client = new Google_Client();
+$client->setAuthConfig($oauth_credentials);
+$client->setRedirectUri($redirect_uri);
+$client->addScope("https://www.googleapis.com/auth/drive");
+$service = new Google_Service_Drive($client);
+
+// add "?logout" to the URL to remove a token from the session
+if (isset($_REQUEST['logout'])) {
+  unset($_SESSION['upload_token']);
+}
+
+/************************************************
+ * If we have a code back from the OAuth 2.0 flow,
+ * we need to exchange that with the
+ * Google_Client::fetchAccessTokenWithAuthCode()
+ * function. We store the resultant access token
+ * bundle in the session, and redirect to ourself.
+ ************************************************/
+
+if (isset($_GET['code'])) {
+  $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
+  $client->setAccessToken($token);
+
+  // store in the session also
+  $_SESSION['upload_token'] = $token;
+
+  // redirect back to the example
+  header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
+}
+
+// set the access token as part of the client
+if (!empty($_SESSION['upload_token'])) {
+  $client->setAccessToken($_SESSION['upload_token']);
+  if ($client->isAccessTokenExpired()) {
+    unset($_SESSION['upload_token']);
+  }
+} else {
+  $authUrl = $client->createAuthUrl();
+}
+
+if($clientData = $client->getAccessToken()){
+  if (array_key_exists('refresh_token', $clientData)) {
+    if($block->saveData($clientData['refresh_token'], $redirect_uri)){
+      ?>
+      <div class="logos">
+        <img class="store-logo" src="<?php echo $block->getLogoSrc(); ?>">
+        <img class="connection" src="<?php echo $this->getViewFileUrl('Excellence_Orderexport::images/connection.png'); ?>" />
+        <img class="drive-logo" src="<?php echo $this->getViewFileUrl('Excellence_Orderexport::images/google-drive-logo.png'); ?>" />
+        
+      </div>
+      <div class="msg">
+        <h3><?php echo __("Connected"); ?></h3>
+        <button class="close-window" onclick="closeWindowOnSuccess();"><?php echo __("Close Window"); ?></button>
+      </div>
+      <?php
+    }
+  };
+}
+
+?>
+
+<?php if (isset($authUrl)): ?>
+  <div class="request">
+    <a class='login' href='<?= $authUrl ?>'><?php echo __('Connect'); ?></a>
+  </div>
+<?php endif ?>
+<script type="text/javascript">
+var closeWindowOnSuccess = function(){
+  window.opener.location.reload(true);
+  window.close();
+}
+</script>

@@ -1,0 +1,47 @@
+<?php
+    $isGoogleConnected = false;
+    if($block->isGoogleConnected()){
+        $isGoogleConnected = true;
+    }
+?>
+<div class="pp-buttons-container">
+    <button
+    	class="add-to-google" 
+    	id="<?php echo $block->getId() ?>" 
+        <?php
+            if($isGoogleConnected){
+                echo "disabled";
+            }
+        ?>
+    >
+        <span><span><span><?php echo $block->escapeHtml($block->getButtonLabel()); ?></span></span></span>
+    </button>
+
+    <?php
+        if($isGoogleConnected){
+            ?>
+            <button
+                class="add-to-google" 
+                id="google-connection-revoke" 
+            >
+                <span><span><span><?php echo __('Revoke Connection'); ?></span></span></span>
+            </button>
+            <?php
+        }
+    ?>
+
+</div>
+<script type="text/javascript">
+require(['jquery'],function(jQuery){
+	jQuery("#google_drive_connect").click(function(){
+		window.open ("<?php echo $block->pageUrl(); ?>", 'newwindow', config='height=600, width=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, directories=no, status=no');
+		return false;
+	});
+
+    jQuery("#google-connection-revoke").click(function(){
+        jQuery("#google_drive_connect").removeAttr('disabled');
+        jQuery(this).remove();
+        return false;
+    });
+});
+</script>
